@@ -12,7 +12,6 @@ from urllib.parse import quote as urlencode
 from astropy.table import Table
 import numpy as np
 import pandas as pd
-
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -55,6 +54,7 @@ def mast_query(request):
 def set_filters(parameters):
     return [{"paramName":p, "values":v} for p,v in parameters.items()]
 
+
 def set_min_max(min, max):
     return [{'min': min, 'max': max}]
 
@@ -62,7 +62,7 @@ def set_min_max(min, max):
 object_of_interest = 'M101'
 
 resolver_request = {'service': 'Mast.Name.Lookup',
-                    'params': {'input':object_of_interest,
+                    'params': {'input': object_of_interest,
                                'format': 'json'},
                     }
 
@@ -76,14 +76,14 @@ obj_dec = resolved_object['resolvedCoordinate'][0]['decl']
 
 
 mast_request = {'service': 'Mast.Caom.Cone',
-                'params': {'ra':obj_ra,
-                           'dec':obj_dec,
-                           'radius':0.2},
-                'format': 'json',
+                'params':  {'ra': obj_ra,
+                            'dec': obj_dec,
+                            'radius': 0.2},
+                'format':  'json',
                 'pagesize': 2000,
                 'page': 1,
-                'removenullcolumns':True,
-                'removecache':True}
+                'removenullcolumns': True,
+                'removecache': True}
 
 headers, mast_data_str = mast_query(mast_request)
 
@@ -127,7 +127,7 @@ def download_data_to_csv(file_name = "data.csv"):
 
 
 
-
-mast_data_table = put_query_in_astropy_table_format(mast_data)
-df = make_df_from_astropy_table(mast_data_table)
+# Run the code
+mast_data_table= put_query_in_astropy_table_format(mast_data)
+df             = make_df_from_astropy_table(mast_data_table)
 download_data_to_csv(file_name = "data.csv")
